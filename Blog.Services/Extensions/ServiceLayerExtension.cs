@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 namespace Blog.Services.Extensions
 {
     public static class ServiceLayerExtension
@@ -14,6 +15,7 @@ namespace Blog.Services.Extensions
             var assembly = Assembly.GetExecutingAssembly();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
             services.AddAutoMapper(assembly);

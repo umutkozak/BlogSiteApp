@@ -26,6 +26,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             validator = _validator;
             notification = _toastNotification;
         }
+        [Route("/Admin/Article/Index")]
         public async Task<IActionResult> Index()
         {
             var articles = await articleService.GetAllArticleWithCategoryNonDeletedAsycn();
@@ -91,7 +92,9 @@ namespace Blog.Web.Areas.Admin.Controllers
             var result = await validator.ValidateAsync(map);
             if (result.IsValid)
             {
-                await articleService.UpdateArticleAsycn(vm);
+              var title= await articleService.UpdateArticleAsycn(vm);
+                notification.AddSuccessToastMessage(ResultMessages.Messages.Update(vm.Title),new ToastrOptions { Title="Başarılı" });
+                
             }
             else
             {
@@ -105,9 +108,9 @@ namespace Blog.Web.Areas.Admin.Controllers
 
         public async Task<ActionResult> Delete(Guid Id)
         {
-            await articleService.SafeDeleteArticleAsycn(Id);
-
-            return RedirectToAction("Index");
+           var title= await articleService.SafeDeleteArticleAsycn(Id);
+            notification.AddSuccessToastMessage(ResultMessages.Messages.Delete(title), new ToastrOptions { Title="Başarılı" });
+            return RedirectToAction("/Admin/Article/Index");
 
 
         }

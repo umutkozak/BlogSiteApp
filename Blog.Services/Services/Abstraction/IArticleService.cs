@@ -13,7 +13,7 @@ namespace Blog.Services.Services.Abstraction
         Task<List<ArticleVM>> GetAllArticleWithCategoryNonDeletedAsycn();
         Task CreateArticleAddAsycn(ArticleAddVM articleVM);
         Task<ArticleVM> GetArticleWithCategoryNonDeletedAsycn(Guid articleId);
-        Task UpdateArticleAsycn(ArticleUpdateVM updateArticleVM);
-        Task SafeDeleteArticleAsycn(Guid Id);
+        Task<string> UpdateArticleAsycn(ArticleUpdateVM updateArticleVM);
+        Task<string> SafeDeleteArticleAsycn(Guid Id);
     }
 }
