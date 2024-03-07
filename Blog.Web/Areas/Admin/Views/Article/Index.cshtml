@@ -1,0 +1,73 @@
+﻿@model List<ArticleVM>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4">
+        <span class="text-muted fw-light">Makale Yönetimi / Makaleler</span> Basic Tables
+    </h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <h5 class="card-header">Table Basic</h5>
+        <div class="table-responsive text-nowrap m-5">
+ 
+            <li class="menu-item active">
+                <a href="/admin/article/add" class="btn btn-success">
+                    <div data-i18n="Analytics">Makale Ekle</div>
+                </a>
+            </li>
+            <table class="table table-hover" id="articlesTable" width="100%" collspacing="0">
+                <thead>
+                    <tr>
+                        <th>Başlık</th>
+                        <th>Kategori</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th>Oluşturulan</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Başlık</th>
+                        <th>Kategori</th>
+                        <th>Oluşturulma Tarihi</th>
+                        <th>Oluşturulan</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </tfoot>
+                <tbody class="table-border-bottom-0">
+                    @foreach (var item in Model)
+                    {
+                        <tr name="@item.Id">
+                            <td>@item.Title</td>
+                            <td>@item.Category.Name</td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@item.CreatedBy</td>
+                            <td>@(item.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                            <td>
+                                <a class=" btn btn-primary btn-sm" data-id="@item.Id" a href="/admin/article/update/@item.Id"><i class="bx bxs-edit"></i></a>
+                                <a class=" btn btn-danger btn-sm" data-id="@item.Id" a href="/admin/article/delete/@item.Id"><i class="bx bxs-minus-circle"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#articlesTable').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+    </script>
+
+}
